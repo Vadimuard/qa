@@ -1,22 +1,18 @@
-from flask import Flask, request
+from flask import Flask
 import requests
-from nanoid import generate
+from api import save_file
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():  # put application's code here
+def index():
 
     file_content = requests.get('http://localhost:3000').text
+    file_name = save_file(file_content)
 
-    filename = generate()
-
-    f = open(f'clientdata/{filename}', 'a')
-    f.write(str(file_content))
-    f.close()
-    return f'Success! File {filename} was created'
+    return f'Success! File {file_name} was created'
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3001)
+    app.run()
