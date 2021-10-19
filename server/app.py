@@ -1,6 +1,7 @@
 from flask import Flask, send_file
 from api import save_generated_str
 
+
 app = Flask(__name__)
 
 
