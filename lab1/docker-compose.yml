@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: ./server
+    volumes:
+      - servervol:/usr/app/serverdata
+    ports:
+      - 3000:3000
+    command: python -m flask run --port=3000
+    networks:
+      - qalab1
+  client:
+    build:
+      context: ./client
+    container_name: client
+    volumes:
+      - clientvol:/usr/app/clientdata
+    ports:
+      - 4000:4000
+    command: python -m flask run --port=4000
+    depends_on:
+      - server
+    networks:
+      - qalab1
+networks:
+  qalab1:
+volumes:
+  servervol:
+  clientvol:
