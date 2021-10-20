@@ -1,5 +1,11 @@
 from nanoid import generate
+import hashlib
+
 KILO_BYTE = 1024
+
+
+def get_checksum_of_file(filename):
+    return hashlib.md5(open(filename, 'rb').read()).hexdigest()
 
 
 def save_generated_str():
