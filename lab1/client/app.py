@@ -5,10 +5,11 @@ import sys
 
 app = Flask(__name__)
 
+SERVER_URL = ''
 
 @app.route('/')
 def index():
-    res = requests.get('http://server:3000')
+    res = requests.get(SERVER_URL)
     filename = res.headers['Content-Disposition'].split('inline; filename=')[1]
     original_checksum = res.headers['checksum']
 
@@ -24,5 +25,9 @@ def index():
 
 
 if __name__ == '__main__':
-    port = int(sys.argv[1])
-    app.run(host='0.0.0.0', port=port)
+    host = sys.argv[1]
+    port = int(sys.argv[2])
+    SERVER_URL = f'http://{host}:{port}/'
+    print(f'Client is connected to server by url: {SERVER_URL}')
+    app.run(host='0.0.0.0', port=4000)
+

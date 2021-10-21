@@ -2,14 +2,16 @@ version: '3.7'
 
 services:
   server:
-    container_name: server
+    container_name: ${FILE_SERVER_HOST}
     build:
       context: ./server
     volumes:
       - servervol:/usr/app/serverdata
-    ports:
-      - 3000:3000
-    command: python -m flask run --port=3000
+    expose:
+      - 3000
+    env_file:
+      - .env
+    command: python app.py ${FILE_SERVER_PORT}
     networks:
       - qalab1
   client:
@@ -18,9 +20,11 @@ services:
     container_name: client
     volumes:
       - clientvol:/usr/app/clientdata
+    env_file:
+      - .env
     ports:
       - 4000:4000
-    command: python -m flask run --port=4000
+    command: python app.py ${FILE_SERVER_HOST} ${FILE_SERVER_PORT}
     depends_on:
       - server
     networks:
