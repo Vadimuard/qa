@@ -1,8 +1,8 @@
-export FILE_SERVER_IP=server
-export FILE_SERVER_PORT=3000
+FILE_SERVER_HOST=server
+FILE_SERVER_PORT=3000
 
-docker network create qa-lab1-network
+docker network create lab1_net
 docker volume create servervol
-docker build -t qa-lab1-server .
-
-docker run --name $FILE_SERVER_IP --net qa-lab1-network --rm --mount source=servervol,target=/usr/app/serverdata qa-lab1-server
+docker build -t lab1_server .
+echo docker run --name ${FILE_SERVER_HOST} --net lab1_net --rm --mount source=servervol,target=/usr/app/serverdata --env FILE_SERVER_PORT=${FILE_SERVER_PORT} lab1_server
+docker run --name ${FILE_SERVER_HOST} --net lab1_net --rm --mount source=servervol,target=/usr/app/serverdata --env FILE_SERVER_PORT=${FILE_SERVER_PORT} lab1_server

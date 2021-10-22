@@ -13,7 +13,7 @@ services:
       - .env
     command: python app.py ${FILE_SERVER_PORT}
     networks:
-      - qalab1
+      - net
   client:
     build:
       context: ./client
@@ -28,9 +28,13 @@ services:
     depends_on:
       - server
     networks:
-      - qalab1
+      - net
 networks:
-  qalab1:
+  net:
 volumes:
   servervol:
+    driver: local
+    name: servervol
   clientvol:
+    driver: local
+    name: clientvol
