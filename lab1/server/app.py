@@ -1,6 +1,6 @@
 from flask import Flask, send_file
 from api import save_generated_str, get_checksum_of_file
-
+import sys
 
 app = Flask(__name__)
 
@@ -15,4 +15,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(port=3000)
+    port = int(sys.argv[1])
+    app.run(host='0.0.0.0', port=port)
