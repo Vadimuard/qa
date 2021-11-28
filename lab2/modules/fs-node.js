@@ -12,11 +12,15 @@ export default class FSNode {
     return this.#name;
   }
 
-  set name(newName) {}
+  set name(newName) {
+    this.#name = newName;
+  }
 
   get parent() {
     return this.#parent;
   }
 
-  set parent(newParent) {}
+  set parent(newParent) {
+    this.#parent = newParent;
+  }
 }

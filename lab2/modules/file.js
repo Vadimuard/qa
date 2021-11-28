@@ -1,5 +1,5 @@
-import FSNode from './fs-node';
-import { ALLOWED_TYPES } from './filesystem';
+import FSNode from './fs-node.js';
+import { ALLOWED_TYPES } from '../constants.js';
 
 export default class File extends FSNode {
   #content = '';
