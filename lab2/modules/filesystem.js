@@ -1,45 +1,29 @@
-import Directory from "./directory";
-import {BinaryFile, LogFile, BufferFile} from "./file-types";
+import Directory from './directory';
+import { BinaryFile, LogFile, BufferFile } from './file-types';
 
 export const ALLOWED_TYPES = {
   BINARY: 'BINARY',
   LOG: 'LOG',
   BUFFER: 'BUFFER',
-  DEFAULT: ''
-}
+  DEFAULT: '',
+};
 
 export default class FileSystem {
-  #self = new Directory('root')
+  #self = new Directory('root');
 
-  mkdir(dirPath) {
+  mkdir(dirPath) {}
 
-  }
+  ls(path = '/') {}
 
-  ls(path='/') {
+  mv(oldPath, newPath) {}
 
-  }
+  rm(path) {}
 
-  mv(oldPath, newPath) {
+  cat(filePath) {}
 
-  }
+  touch(path, contents = '') {}
 
-  rm(path) {
+  appendToFile(filePath, line) {}
 
-  }
-
-  cat(filePath) {
-
-  }
-
-  touch(path, contents='') {
-
-  }
-
-  appendToFile(filePath, line) {
-
-  }
-
-  consumeLastElement(filePath) {
-
-  }
+  consumeLastElement(filePath) {}
 }

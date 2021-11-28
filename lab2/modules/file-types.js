@@ -1,4 +1,4 @@
-import File from "./file";
+import File from './file';
 
 export class BinaryFile extends File {
   constructor(fileName) {
@@ -15,9 +15,7 @@ export class LogFile extends BinaryFile {
     super(fileName);
   }
 
-  appendLine(line) {
-
-  }
+  appendLine(line) {}
 }
 
 export class BufferFile extends LogFile {
@@ -25,7 +23,5 @@ export class BufferFile extends LogFile {
     super(fileName);
   }
 
-  consumeLine() {
-
-  }
+  consumeLine() {}
 }

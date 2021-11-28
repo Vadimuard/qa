@@ -6,23 +6,17 @@ export default class FSNode {
     this.#name = name;
   }
 
-  get path() {
-
-  }
+  get path() {}
 
   get name() {
     return this.#name;
   }
 
-  set name(newName) {
-
-  }
+  set name(newName) {}
 
   get parent() {
     return this.#parent;
   }
 
-  set parent(newParent) {
-
-  }
+  set parent(newParent) {}
 }

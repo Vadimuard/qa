@@ -1,5 +1,5 @@
-import FSNode from "./fs-node";
-import {ALLOWED_TYPES} from "./filesystem";
+import FSNode from './fs-node';
+import { ALLOWED_TYPES } from './filesystem';
 
 export default class File extends FSNode {
   #content = '';
@@ -11,17 +11,18 @@ export default class File extends FSNode {
   }
 
   get fileType() {
-    return this.#ext === 'bin' ? ALLOWED_TYPES.BINARY
-      : this.#ext === 'log' ? ALLOWED_TYPES.LOG
-        : this.#ext === 'buf' ? ALLOWED_TYPES.BUFFER
-          : ALLOWED_TYPES.DEFAULT;
+    return this.#ext === 'bin'
+      ? ALLOWED_TYPES.BINARY
+      : this.#ext === 'log'
+      ? ALLOWED_TYPES.LOG
+      : this.#ext === 'buf'
+      ? ALLOWED_TYPES.BUFFER
+      : ALLOWED_TYPES.DEFAULT;
   }
 
   get content() {
     return this.#content;
   }
 
-  set content(newContent) {
-
-  }
+  set content(newContent) {}
 }

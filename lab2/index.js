@@ -1,4 +1,4 @@
-import FileSystem from "./modules/filesystem";
+import FileSystem from './modules/filesystem';
 
 const fs = new FileSystem();
 

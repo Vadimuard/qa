@@ -1,4 +1,4 @@
-import FSNode from "./fs-node";
+import FSNode from './fs-node';
 
 export default class Directory extends FSNode {
   #children = new Map();
@@ -7,23 +7,15 @@ export default class Directory extends FSNode {
     super(directoryName);
   }
 
-  listChildren() {
-
-  }
+  listChildren() {}
 
   hasChild(childName) {
     return this.#children.has(childName);
   }
 
-  getChild(childName) {
+  getChild(childName) {}
 
-  }
+  insertChild(newChild) {}
 
-  insertChild(newChild) {
-
-  }
-
-  deleteChild(childName) {
-
-  }
+  deleteChild(childName) {}
 }
