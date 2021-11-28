@@ -6,7 +6,7 @@ export class BinaryFile extends File {
   }
 
   readFile() {
-    return this.#content;
+    return this.content;
   }
 }
 

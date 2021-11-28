@@ -1,0 +1,16 @@
+{
+  "name": "lab2",
+  "version": "1.0.0",
+  "description": "lab2 for qa",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "vadimuard",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
+    "jest": "^27.3.1"
+  }
+}

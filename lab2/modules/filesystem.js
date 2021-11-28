@@ -15,11 +15,19 @@ export default class FileSystem {
 
   }
 
+  ls(path='/') {
+
+  }
+
   mv(oldPath, newPath) {
 
   }
 
   rm(path) {
+
+  }
+
+  cat(filePath) {
 
   }
 
