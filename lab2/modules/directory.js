@@ -49,9 +49,9 @@ export default class Directory extends FSNode {
   }
 
   deleteChild(childName) {
-    if (this.hasChild(childName)) throw new Error(NOT_FOUND_ERROR(childName));
+    if (!this.hasChild(childName)) throw new Error(NOT_FOUND_ERROR(childName));
     const child = this.#children.get(childName);
-    if (this.#children.delete(childName)) throw new Error('Unknown error');
+    if (!this.#children.delete(childName)) throw new Error('Unknown error');
     return child;
   }
 }

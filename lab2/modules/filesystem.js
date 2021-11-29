@@ -8,8 +8,8 @@ export default class FileSystem {
 
   mkdir(path) {
     const { directoryName, directoryPath } = parsePath(path);
-    let currentDir = this.#self.getChild('/' + directoryPath);
-    currentDir.insertChild(new Directory('/' + directoryName));
+    let currentDir = this.#self.getChild(directoryPath);
+    currentDir.insertChild(new Directory(directoryName));
   }
 
   ls(path = '/') {
@@ -17,28 +17,25 @@ export default class FileSystem {
     const children = dir.listChildren();
     const sortedChildren = [...children.entries()].sort();
     const sortedDirectories = sortedChildren.map((ch) => ch[1]);
-    console.dir(`Contents of "${path}":`);
+    console.log(`Contents of "${path}":`);
     for (const dir of sortedDirectories) {
-      console.log(dir.name);
+      console.dir(dir.name);
     }
   }
 
   mv(oldPath, newPath) {
-    const { directoryName: oldDirName, directoryPath: oldDirPath } =
-      parsePath(oldPath);
-    const oldParentDir = this.#self.getChild('/' + oldDirPath);
-    const oldDir = oldParentDir.deleteChild('/' + oldDirName);
+    const oldDir = this.rm(oldPath);
     const { directoryName: newDirName, directoryPath: newDirPath } =
       parsePath(newPath);
     oldDir.name = newDirName;
-    const currentDir = this.#self.getChild('/' + newDirPath);
+    const currentDir = this.#self.getChild(newDirPath);
     currentDir.insertChild(oldDir);
   }
 
   rm(path) {
     const { directoryName, directoryPath } = parsePath(path);
     const dir = this.#self.getChild(directoryPath);
-    dir.deleteChild(directoryName);
+    return dir.deleteChild(directoryName);
   }
 
   cat(filePath) {}
