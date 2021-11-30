@@ -4,35 +4,36 @@ import FileSystem from './modules/filesystem.js';
 const fs = new FileSystem();
 
 try {
+  fs.mkdir('/bin');
+  fs.mkdir('/log');
+  fs.mkdir('/log/logs-2018');
+  fs.mkdir('/log/logs-2018/logs');
+  fs.mkdir('/log/one-more-log');
+  fs.mkdir('/buf');
 
-fs.mkdir('/bin');
-fs.mkdir('/log');
-fs.mkdir('/log/logs-2018');
-fs.mkdir('/log/logs-2018/logs');
-fs.mkdir('/log/one-more-log');
-fs.mkdir('/buf');
+  fs.ls();
+  fs.ls('/log');
+  fs.ls('/log/logs-2018');
 
-fs.ls();
-fs.ls('/log');
-fs.ls('/log/logs-2018');
+  // fs.rm('/log/logs-2018');
+  fs.mv('/log/logs-2018', 'logs');
 
-// fs.rm('/log/logs-2018');
-fs.mv('/log/logs-2018', 'logs');
+  fs.ls();
+  fs.ls('/log');
+  fs.ls('/logs');
+  // fs.ls('/log/logs-2018');
+  // fs.mkdir('/bin/sub-bin');
 
-fs.ls();
-fs.ls('/log');
-// fs.ls('/log/logs-2018');
-// fs.mkdir('/bin/sub-bin');
+  fs.touch('/bin/first.bin', 'binary 1');
+  fs.touch('/bin/second.bin', 'binary 2');
+  fs.ls('/bin');
+  fs.cat('/bin/first.bin');
+  // fs.touch('/log/app.log');
+  // fs.touch('/buf/first.buf', '--------------');
 
-// fs.touch('/bin/first.bin', 'binary 1');
-// fs.touch('/bin/second.bin', 'binary 2');
-// fs.touch('/log/app.log');
-// fs.touch('/buf/first.buf', '--------------');
-
-// fs.appendToFile('/log/app.log', 'app created successfully');
-// fs.appendToFile('/buf/first.buf', 'second line of the buffer');
-// fs.consumeLastElement('/buf/first.buf');
-
+  // fs.appendToFile('/log/app.log', 'app created successfully');
+  // fs.appendToFile('/buf/first.buf', 'second line of the buffer');
+  // fs.consumeLastElement('/buf/first.buf');
 } catch (err) {
-    console.error(err);
+  console.error(err);
 }

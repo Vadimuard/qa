@@ -1,5 +1,6 @@
 import FSNode from './fs-node.js';
 import { ALLOWED_TYPES } from '../constants.js';
+import getFileExtension from '../helpers/getFileExtension.js';
 
 export default class File extends FSNode {
   #content = '';
@@ -7,22 +8,18 @@ export default class File extends FSNode {
 
   constructor(fileName) {
     super(fileName);
-    this.#ext = fileName.split('.')[1];
+    this.#ext = getFileExtension(fileName);
   }
 
   get fileType() {
-    return this.#ext === 'bin'
-      ? ALLOWED_TYPES.BINARY
-      : this.#ext === 'log'
-      ? ALLOWED_TYPES.LOG
-      : this.#ext === 'buf'
-      ? ALLOWED_TYPES.BUFFER
-      : ALLOWED_TYPES.DEFAULT;
+    this.#ext;
   }
 
   get content() {
     return this.#content;
   }
 
-  set content(newContent) {}
+  set content(newContent) {
+    this.#content = newContent;
+  }
 }

@@ -1,7 +1,12 @@
 import Directory from './directory.js';
 import { BinaryFile, LogFile, BufferFile } from './file-types.js';
-import { ALLOWED_TYPES, NOT_FOUND_ERROR } from '../constants.js';
+import {
+  ALLOWED_TYPES,
+  NOT_FOUND_ERROR,
+  NOT_SUPPORTED_EXT_ERROR,
+} from '../constants.js';
 import parsePath from '../helpers/parsePath.js';
+import getFileExtension from '../helpers/getFileExtension.js';
 
 export default class FileSystem {
   #self = new Directory('root');
@@ -38,9 +43,31 @@ export default class FileSystem {
     return dir.deleteChild(directoryName);
   }
 
-  cat(filePath) {}
+  cat(filePath) {
+    const { directoryName, directoryPath: fileName } = parsePath(filePath);
+    const currentDir = this.#self.getChild(directoryName);
+    const file = currentDir.getChild(fileName);
+    console.dir(contents);
+    return file.contents;
+  }
 
-  touch(path, contents = '') {}
+  touch(path, contents = '') {
+    const { directoryPath, directoryName: fileName } = parsePath(path);
+    let currentDir = this.#self.getChild(directoryPath);
+    const ext = getFileExtension(fileName);
+    let newFile = {};
+    if (ext === ALLOWED_TYPES.DEFAULT) {
+      throw new Error(NOT_SUPPORTED_EXT_ERROR(ext));
+    } else if (ext === ALLOWED_TYPES.BINARY) {
+      newFile = new BinaryFile(fileName);
+      newFile.content = contents;
+    } else if (ext === ALLOWED_TYPES.LOG) {
+      newFile = new LogFile(fileName);
+    } else if (ext === ALLOWED_TYPES.BUFFER) {
+      newFile = new BufferFile(fileName);
+    }
+    currentDir.insertChild(newFile);
+  }
 
   appendToFile(filePath, line) {}
 
