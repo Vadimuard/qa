@@ -44,32 +44,84 @@ export default class FileSystem {
   }
 
   cat(filePath) {
-    const { directoryName, directoryPath: fileName } = parsePath(filePath);
-    const currentDir = this.#self.getChild(directoryName);
+    const { directoryPath, directoryName: fileName } = parsePath(filePath);
+    const currentDir = this.#self.getChild(directoryPath);
     const file = currentDir.getChild(fileName);
-    console.dir(contents);
-    return file.contents;
+    console.log(`Contents of ${filePath}:`);
+    console.dir(file.content);
+    return file.content;
   }
 
   touch(path, contents = '') {
     const { directoryPath, directoryName: fileName } = parsePath(path);
-    let currentDir = this.#self.getChild(directoryPath);
+    const currentDir = this.#self.getChild(directoryPath);
     const ext = getFileExtension(fileName);
     let newFile = {};
-    if (ext === ALLOWED_TYPES.DEFAULT) {
-      throw new Error(NOT_SUPPORTED_EXT_ERROR(ext));
-    } else if (ext === ALLOWED_TYPES.BINARY) {
-      newFile = new BinaryFile(fileName);
-      newFile.content = contents;
-    } else if (ext === ALLOWED_TYPES.LOG) {
-      newFile = new LogFile(fileName);
-    } else if (ext === ALLOWED_TYPES.BUFFER) {
-      newFile = new BufferFile(fileName);
+
+    switch (ext) {
+      case ALLOWED_TYPES.BINARY:
+        newFile = new BinaryFile(fileName);
+        newFile.content = contents;
+        break;
+      case ALLOWED_TYPES.LOG:
+        newFile = new LogFile(fileName, contents);
+        newFile.content = contents;
+        break;
+      case ALLOWED_TYPES.BUFFER:
+        newFile = new BufferFile(fileName);
+        break;
+      default:
+        throw new Error(NOT_SUPPORTED_EXT_ERROR(ext));
     }
     currentDir.insertChild(newFile);
   }
 
-  appendToFile(filePath, line) {}
+  appendToFile(filePath, line) {
+    const { directoryPath, directoryName: fileName } = parsePath(filePath);
+    const ext = getFileExtension(fileName);
+    const currentDir = this.#self.getChild(directoryPath);
+    const file = currentDir.getChild(fileName);
 
-  consumeLastElement(filePath) {}
+    switch (ext) {
+      case ALLOWED_TYPES.LOG:
+      case ALLOWED_TYPES.BUFFER:
+        const isFileEmpty = file.content === '';
+        if (isFileEmpty) {
+          file.content = line;
+        } else {
+          const lines = file.content.split('\n');
+          lines.push(line);
+          file.content = lines.join('\n');
+        }
+        break;
+      default:
+        throw new Error(NOT_SUPPORTED_EXT_ERROR(ext));
+    }
+    return line;
+  }
+
+  consumeLastElement(filePath) {
+    const { directoryPath, directoryName: fileName } = parsePath(filePath);
+    const ext = getFileExtension(fileName);
+    const currentDir = this.#self.getChild(directoryPath);
+    const file = currentDir.getChild(fileName);
+
+    switch (ext) {
+      case ALLOWED_TYPES.BUFFER:
+        const isFileEmpty = file.content === '';
+        if (isFileEmpty) {
+          console.log(`Buffer ${filePath} is empty`);
+        } else {
+          const lines = file.content.split('\n');
+          const line = lines.pop();
+          file.content = lines.join('\n');
+          console.log(`One line was consumed from buffer ${filePath}:`);
+          console.dir(line);
+          return line;
+        }
+        break;
+      default:
+        throw new Error(NOT_SUPPORTED_EXT_ERROR(ext));
+    }
+  }
 }

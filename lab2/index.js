@@ -1,4 +1,3 @@
-// import FileSystem from './modules/filesystem';
 import FileSystem from './modules/filesystem.js';
 
 const fs = new FileSystem();
@@ -28,12 +27,23 @@ try {
   fs.touch('/bin/second.bin', 'binary 2');
   fs.ls('/bin');
   fs.cat('/bin/first.bin');
-  // fs.touch('/log/app.log');
-  // fs.touch('/buf/first.buf', '--------------');
 
-  // fs.appendToFile('/log/app.log', 'app created successfully');
-  // fs.appendToFile('/buf/first.buf', 'second line of the buffer');
-  // fs.consumeLastElement('/buf/first.buf');
+  fs.touch('/log/first.log', 'App1 logs');
+  fs.cat('/log/first.log');
+
+  fs.appendToFile('/log/first.log', 'App1 created successfully');
+  fs.cat('/log/first.log');
+  // fs.touch('/log/app.log');
+
+  fs.touch('/buf/first.buf');
+  fs.appendToFile('/buf/first.buf', 'first line of the buffer');
+  fs.appendToFile('/buf/first.buf', 'second line of the buffer');
+  fs.cat('/buf/first.buf');
+
+  fs.consumeLastElement('/buf/first.buf');
+  fs.cat('/buf/first.buf');
+  fs.consumeLastElement('/buf/first.buf');
+  fs.consumeLastElement('/buf/first.buf');
 } catch (err) {
   console.error(err);
 }
