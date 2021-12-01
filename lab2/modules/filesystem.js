@@ -21,11 +21,12 @@ export default class FileSystem {
     const dir = this.#self.getChild(path);
     const children = dir.listChildren();
     const sortedChildren = [...children.entries()].sort();
-    const sortedDirectories = sortedChildren.map((ch) => ch[1]);
+    const sortedDirectories = sortedChildren.map((ch) => ch[1].name);
     console.log(`Contents of "${path}":`);
     for (const dir of sortedDirectories) {
-      console.dir(dir.name);
+      console.dir(dir);
     }
+    return sortedDirectories.join('\n');
   }
 
   mv(oldPath, newPath) {
@@ -111,6 +112,7 @@ export default class FileSystem {
         const isFileEmpty = file.content === '';
         if (isFileEmpty) {
           console.log(`Buffer ${filePath} is empty`);
+          return `Buffer "${filePath}" is empty`;
         } else {
           const lines = file.content.split('\n');
           const line = lines.pop();
