@@ -44,6 +44,7 @@ try {
   fs.cat('/buf/first.buf');
   fs.consumeLastElement('/buf/first.buf');
   fs.consumeLastElement('/buf/first.buf');
+  fs.rm('/buf/first.buf');
 } catch (err) {
   console.error(err);
 }
