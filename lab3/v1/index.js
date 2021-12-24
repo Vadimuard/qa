@@ -1,14 +1,11 @@
-import { Builder, By, Key, until } from "selenium-webdriver";
+import { Builder, By } from "selenium-webdriver";
 import assert from "assert/strict";
+import { nanoid } from "nanoid";
 
 const wait = (timeToDelay) =>
   new Promise((resolve) => setTimeout(resolve, timeToDelay));
 
-const generatePseudoRandomStr = () => {
-  return (Math.random() + 1).toString(36).substring(2);
-};
-
-const email = `${generatePseudoRandomStr()}@gmail.com`;
+const email = `${nanoid(20)}@gmail.com`;
 
 (async () => {
   let driver = await new Builder().forBrowser("chrome").build();
@@ -33,6 +30,25 @@ const email = `${generatePseudoRandomStr()}@gmail.com`;
   );
   await reEnterEmailElem.sendKeys(email);
   const passwordElem = await driver.findElement(By.name("reg_passwd__"));
-  await passwordElem.sendKeys(generatePseudoRandomStr());
+  await passwordElem.sendKeys(nanoid(10));
+  const birthdayMonthElem = await driver.findElement(By.name("birthday_month"));
+  await birthdayMonthElem.sendKeys("Mar");
+  const birthdayDayElem = await driver.findElement(By.name("birthday_day"));
+  await birthdayDayElem.sendKeys(15);
+  const birthdayYearElem = await driver.findElement(By.name("birthday_year"));
+  await birthdayYearElem.sendKeys(2006);
+  const sexElem = await driver.findElement(
+    By.xpath('//input[@name="sex" and @value="2"]')
+  );
+  await sexElem.click();
+  const submitBtn = await driver.findElement(By.name("websubmit"));
+  await wait(2000);
+  await submitBtn.click();
+  await wait(5000);
+  const signUpConfirmation = await driver.findElement(
+    By.xpath("//*[text()='Enter the code from your email']")
+  );
+  assert.deepEqual(!!signUpConfirmation, true);
+
   //   await driver.quit();
 })();
