@@ -1,11 +1,12 @@
 import { Builder, By } from "selenium-webdriver";
 import assert from "assert/strict";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("0123456789abcdefghjiklomnpqrstuvwxyz", 12);
 
 const wait = (timeToDelay) =>
   new Promise((resolve) => setTimeout(resolve, timeToDelay));
 
-const email = `${nanoid(20)}@gmail.com`;
+const email = `${nanoid()}@gmail.com`;
 
 (async () => {
   let driver = await new Builder().forBrowser("chrome").build();
@@ -30,7 +31,7 @@ const email = `${nanoid(20)}@gmail.com`;
   );
   await reEnterEmailElem.sendKeys(email);
   const passwordElem = await driver.findElement(By.name("reg_passwd__"));
-  await passwordElem.sendKeys(nanoid(10));
+  await passwordElem.sendKeys(nanoid());
   const birthdayMonthElem = await driver.findElement(By.name("birthday_month"));
   await birthdayMonthElem.sendKeys("Mar");
   const birthdayDayElem = await driver.findElement(By.name("birthday_day"));
@@ -44,11 +45,9 @@ const email = `${nanoid(20)}@gmail.com`;
   const submitBtn = await driver.findElement(By.name("websubmit"));
   await wait(2000);
   await submitBtn.click();
-  await wait(5000);
+  await wait(10000);
   const signUpConfirmation = await driver.findElement(
     By.xpath("//*[text()='Enter the code from your email']")
   );
   assert.deepEqual(!!signUpConfirmation, true);
-
-  //   await driver.quit();
 })();
